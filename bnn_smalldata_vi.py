@@ -53,15 +53,15 @@ PRIOR_SCALE = 0.25
 NUM_CLASSES = 2
 
 RESULT_FILENAMES = {
-    ("3", "all"): "bnn_vi_roc_results_3_20neuron_full_70000train_20000test_prior25_GELU.npz",
-    ("3", "ECG2"): "bnn_vi_roc_results_3_20neuron_ECG_Echo_70000train_20000test_prior25_GELU.npz",
-    ("3", "ECG"): "bnn_vi_roc_results_3_20neuron_ECG_only_70000train_20000test_prior25_GELU.npz",
-    ("5", "all"): "bnn_vi_roc_results_5_20neuron_full_70000train_20000test_prior25_GELU.npz",
-    ("5", "ECG2"): "bnn_vi_roc_results_5_20neuron_ECG_Echo_70000train_20000test_prior25_GELU.npz",
-    ("5", "ECG"): "bnn_vi_roc_results_5_20neuron_ECG_only_70000train_20000test_prior25_GELU.npz",
-    ("10", "all"): "bnn_vi_roc_results_10_20neuron_full_70000train_20000test_prior25_GELU.npz",
-    ("10", "ECG2"): "bnn_vi_roc_results_10_20neuron_ECG_Echo_70000train_20000test_prior25_GELU.npz",
-    ("10", "ECG"): "bnn_vi_roc_results_10_20neuron_ECG_only_70000train_20000test_prior25_GELU.npz",
+    ("3", "all"): "bnn_vi_roc_results_3_20neuron_full_70000train_20000test_prior25_TANH.npz",
+    ("3", "ECG2"): "bnn_vi_roc_results_3_20neuron_ECG_Echo_70000train_20000test_prior25_TANH.npz",
+    ("3", "ECG"): "bnn_vi_roc_results_3_20neuron_ECG_only_70000train_20000test_prior25_TANH.npz",
+    ("5", "all"): "bnn_vi_roc_results_5_20neuron_full_70000train_20000test_prior25_TANH.npz",
+    ("5", "ECG2"): "bnn_vi_roc_results_5_20neuron_ECG_Echo_70000train_20000test_prior25_TANH.npz",
+    ("5", "ECG"): "bnn_vi_roc_results_5_20neuron_ECG_only_70000train_20000test_prior25_TANH.npz",
+    ("10", "all"): "bnn_vi_roc_results_10_20neuron_full_70000train_20000test_prior25_TANH.npz",
+    ("10", "ECG2"): "bnn_vi_roc_results_10_20neuron_ECG_Echo_70000train_20000test_prior25_TANH.npz",
+    ("10", "ECG"): "bnn_vi_roc_results_10_20neuron_ECG_only_70000train_20000test_prior25_TANH.npz",
 }
 
 
@@ -251,9 +251,8 @@ def bnn_model_factory(num_hidden_layers: int) -> Callable:
         for i in range(num_hidden_layers):
             w = numpyro.sample(f"w{i+1}", dist.Normal(0.0, prior_scale).expand([width_in, hidden_dim]).to_event(2))
             b = numpyro.sample(f"b{i+1}", dist.Normal(0.0, prior_scale).expand([hidden_dim]).to_event(1))
-            # hidden = jax.nn.tanh(jnp.dot(hidden, w) + b)
+            hidden = jax.nn.tanh(jnp.dot(hidden, w) + b)
             # hidden = jax.nn.relu(jnp.dot(hidden, w) + b)
-            hidden = jax.nn.gelu(jnp.dot(hidden, w) + b)
             width_in = hidden_dim
 
         w_out = numpyro.sample(f"w{num_hidden_layers+1}", dist.Normal(0.0, prior_scale).expand([width_in, num_classes]).to_event(2))
