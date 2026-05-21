@@ -33,10 +33,15 @@ This repository provides code for:
 - Computing performance metrics including ROC curves, AUC, confusion matrices, and classification reports
 - Generating plots and figures used for model evaluation and interpretation
 
-## Installation
+## Software
 
-We recommend using a clean Python environment.
+The following are required to run the scripts.
 
-```bash
-conda create -n shd-triage python=3.10
-conda activate shd-triage
+numpy
+pandas
+matplotlib
+scikit-learn
+torch
+jax
+jaxlib
+numpyro
