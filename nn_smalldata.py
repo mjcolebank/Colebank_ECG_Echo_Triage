@@ -45,15 +45,15 @@ N_NEURONS = 20
 DROPOUT = 0.5
 
 RESULT_FILENAMES = {
-    ("3", "all"): "NN_roc_results_3_ALLDATA_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("3", "ECG2"): "NN_roc_results_3_ECG_ECHO_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("3", "ECG"): "NN_roc_results_3_ECG_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("5", "all"): "NN_roc_results_5_ALLDATA_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("5", "ECG2"): "NN_roc_results_5_ECG_ECHO_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("5", "ECG"): "NN_roc_results_5_ECG_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("10", "all"): "NN_roc_results_10_ALLDATA_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("10", "ECG2"): "NN_roc_results_10_ECG_ECHO_20neuron_8000train_2000test_dropout50_TANH.npz",
-    ("10", "ECG"): "NN_roc_results_10_ECG_20neuron_8000train_2000test_dropout50_TANH.npz",
+    ("3", "all"): "NN_roc_results_3_ALLDATA_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("3", "ECG2"): "NN_roc_results_3_ECG_ECHO_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("3", "ECG"): "NN_roc_results_3_ECG_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("5", "all"): "NN_roc_results_5_ALLDATA_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("5", "ECG2"): "NN_roc_results_5_ECG_ECHO_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("5", "ECG"): "NN_roc_results_5_ECG_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("10", "all"): "NN_roc_results_10_ALLDATA_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("10", "ECG2"): "NN_roc_results_10_ECG_ECHO_20neuron_8000train_2000test_dropout50_RELU.npz",
+    ("10", "ECG"): "NN_roc_results_10_ECG_20neuron_8000train_2000test_dropout50_RELU.npz",
 }
 
 
@@ -75,7 +75,7 @@ class SimpleClassifier3(nn.Module):
         self.fc1 = nn.Linear(input_size, N_NEURONS)
         self.fc2 = nn.Linear(N_NEURONS, N_NEURONS)
         self.fc3 = nn.Linear(N_NEURONS, num_classes)
-        self.relu = nn.Tanh()
+        self.relu = nn.ReLU()
         self.dropout = nn.Dropout(DROPOUT)
         self.output = nn.Sigmoid()
 
@@ -95,7 +95,7 @@ class SimpleClassifier5(nn.Module):
         self.fc3 = nn.Linear(N_NEURONS, N_NEURONS)
         self.fc4 = nn.Linear(N_NEURONS, N_NEURONS)
         self.fc5 = nn.Linear(N_NEURONS, num_classes)
-        self.relu = nn.Tanh()
+        self.relu = nn.ReLU()
         self.dropout = nn.Dropout(DROPOUT)
         self.output = nn.Softmax(dim=1)
 
@@ -117,7 +117,7 @@ class SimpleClassifier10(nn.Module):
         self.layers = nn.ModuleList(
             [nn.Linear(input_size, N_NEURONS)] + [nn.Linear(N_NEURONS, N_NEURONS) for _ in range(8)] + [nn.Linear(N_NEURONS, num_classes)]
         )
-        self.relu = nn.Tanh()
+        self.relu = nn.ReLU()
         self.dropout = nn.Dropout(DROPOUT)
         self.output = nn.Sigmoid()
 
