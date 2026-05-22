@@ -37,11 +37,11 @@ This repository provides code for:
 
 The following are required to run the scripts.
 
-numpy
-pandas
-matplotlib
-scikit-learn
-torch
-jax
-jaxlib
-numpyro
+- numpy
+- pandas
+- matplotlib
+- scikit-learn
+- torch
+- jax
+- jaxlib
+- numpyro
